@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="shortcut icon" href="#">
+    <title>Manejo de JSON</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <br>
+    <center><button onclick="getDat();">Refrescar</button></center>
+    <div class="w3-container">
+    <center>
+    <br>
+    <table class="w3-table w3-striped" border="1px">
+    <thead class="w3-green">
+          <th>Album ID</th>
+          <th>ID</th>
+          <th>Titulo</th>
+          <th>URL</th>
+          <th>Thumbnail Url</th>
+    </thead>
+    <tbody id="cuerpoTable"></tbody>
+    </table>
+    </center>
+    </div>
+    <script language='JavaScript' type='text/javascript'>
+        getDat();
+        function getDat()
+        {
+            $.ajax({
+              type:"GET",
+              url:"https://jsonplaceholder.typicode.com/albums/1/photos",
+              dataType:"json",
+              success:function(data){
+              //const array = [data];
+              //console.log(array);
+              var body;
+
+              for (var i = 0; i < data.length; i++) {    
+              body+=`<tr class="w3-white"><td>${data[i].albumId}</td><td>${data[i].id}</td><td>
+                ${data[i].title}</td><td><img src='${data[i].url}' width="100" height="100"/>
+                </td><td><img src='${data[i].thumbnailUrl}' width="100" height="100"/></td></tr>`
+
+              
+              }
+            
+            $("#cuerpoTable").empty(body);
+
+            $("#cuerpoTable").append(body);
+              }
+          });
+        }
+    </script>
+    <br>
+    <center><input id="input"></input>&nbsp;&nbsp;<button onclick="buscDat();">Buscar</button></center>
+    <br>
+    <form id="frmData" method="POST">
+        <center><input placeholder="Album ID" id="albId" name="albId">&nbsp;&nbsp;&nbsp;</input><input placeholder="ID" id="id" name="id">&nbsp;&nbsp;&nbsp;</input><input placeholder="Titulo" id="inTit" size="35px" name="inTit">
+            <br>
+            <br>
+            <input placeholder="Url" id="url" name="url" size="40px">&nbsp;&nbsp;&nbsp;</input><input placeholder="Thumbnail Url" id="thUrl" name="thUrl" size="40px">&nbsp;&nbsp;&nbsp;<button id="btnInsert" onclick="insertData();" type="button">Insertar</button>
+        </input></center>
+    </form>
+    <br>
+    <center><button onclick="location.href='mostrar.php'" >Consultar Datos</button></center>
+    <script src="app.js"></script>
+</body>
+</html>
